@@ -1,0 +1,29 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pyflakes = "*"
+nose = "*"
+mock = "*"
+pytest = "*"
+pytest-stoq = "*"
+
+[packages]
+requests = ">=2.2"
+netifaces = "*"
+gevent = ">=1.1.0"
+raven = "*"
+psutil = ">=3.4.2"
+tzlocal = ">=1.2.2"
+Twisted = ">=10.0.0"
+Flask = ">=0.10.1"
+Flask-RESTful = ">=0.3.4"
+kiwi-gtk = ">=3.0"
+pygobject = "*"
+stoq = {git = "https://github.com/stoq/stoq.git"}
+stoqdrivers = {git = "https://github.com/stoq/stoqdrivers.git"}
+
+[requires]
+python_version = "3.6"

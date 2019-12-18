@@ -2,6 +2,8 @@ Twisted >= 10.0.0
 flask >= 0.10.1
 flask-restful >= 0.3.4
 requests >= 2.2
+git+https://github.com/leodaher/stoq.git@snap#egg=stoq
+git+https://github.com/stoq/stoqdrivers.git#egg=stoqdrivers
 #stoq >= 1.10
 netifaces
 gevent >= 1.1.0

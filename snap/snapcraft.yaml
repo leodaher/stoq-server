@@ -1,0 +1,89 @@
+name: stoq-server
+base: core
+version: '0.1'
+summary: The backend for the Stoq application
+description: The backend for the Stoq application
+apps:
+    stoq-server:
+        environment:
+            PYTHONPATH: $PYTHONPATH:$SNAP/dist
+        adapter: full
+        command: bin/stoqserver flask
+parts:
+    #
+    # This part is for using Python3.6 instead of the system Python
+    #
+    #python36:
+    #    plugin: nil
+    #    override-pull: |
+    #        apt install -y software-properties-common
+    #        apt-add-repository ppa:deadsnakes/ppa
+    #        apt update
+    #        wget https://bootstrap.pypa.io/get-pip.py
+
+    #    override-build: |
+    #        apt install -y python3.6 python3.6-dev python3.6-venv python3-pip
+
+    #    override-stage: |
+    #        mkdir -p $SNAPCRAFT_STAGE/usr
+    #        mkdir -p $SNAPCRAFT_STAGE/usr/bin
+    #        cp /usr/bin/python3.6 $SNAPCRAFT_STAGE/usr/bin/python3
+            
+    # This part is for installing stoq's system dependencies. They need to
+    # be split into dependencies required to build and dependencies needed
+    # in runtime.
+    stoq:
+        #    after: [python36]
+        plugin: nil
+        source: https://github.com/stoq/stoq.git
+        override-pull: |
+            apt install -y software-properties-common
+            apt-add-repository ppa:stoq-maintainers/unstable
+            apt update
+
+        override-build: |
+            apt install --yes stoq libnss3-dev libcairo2-dev libgirepository1.0-dev libpq-dev swig g++ gcc pkg-config
+            apt remove -y stoq 
+
+    stoq-server:
+        after: [stoq]
+        plugin: nil
+        override-build: |
+            apt update
+            apt install -y python3-pip python3-venv python3-dev
+            apt install -y stoq-server  
+            apt remove -y stoq-server
+
+            # Ensure pip is in its latest version
+            python3 -m pip install -U setuptools pip wheel
+
+            # This line is for python 3.6
+            #python3 -m pip install -U --force-reinstall cffi
+
+            # Since we can't use venv, use --ignore-installed so we can
+            # "overwrite" the system python dependencies
+            python3 -m pip install --ignore-installed -e .
+
+            # This should be done automatically with `snapcraftctl build`,
+            # but we are currently unable to install Stoq using setup.py,
+            # so we copy the files manually
+            cp -r * $SNAPCRAFT_PART_INSTALL/
+            mkdir -p $SNAPCRAFT_PART_INSTALL/dist
+
+            # Copies the python dist-packages to a directory that is in
+            # the PYTHONPATH, but this should be changed.
+            cp -a /usr/lib/python3/dist-packages/. $SNAPCRAFT_PART_INSTALL/bin/
+            cp -a /usr/lib/python3.5/dist-packages/. $SNAPCRAFT_PART_INSTALL/bin/
+
+        stage-packages:
+            - libpq-dev
+            - libxml2-dev
+            - libxml2
+            - libxslt1.1
+            - libxslt1-dev
+
+        # This might not be needed
+        override-prime:
+            cp -r $SNAPCRAFT_STAGE/* $SNAPCRAFT_PRIME/
+
+        source: .

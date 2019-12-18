@@ -1,0 +1,35 @@
+-i https://pypi.org/simple
+aniso8601==8.0.0
+attrs==19.3.0
+automat==0.8.0
+certifi==2019.11.28
+chardet==3.0.4
+click==7.0
+constantly==15.1.0
+flask-restful==0.3.7
+flask==1.1.1
+gevent==1.4.0
+git+https://github.com/stoq/stoq.git@c8fc08c50a18ff8dde11e1a9da9f30d3b4a94bbd#egg=stoq
+git+https://github.com/stoq/stoqdrivers.git@5839fbf35836972272d7b1aec8a63ef1b9672b0f#egg=stoqdrivers
+greenlet==0.4.15 ; platform_python_implementation == 'CPython'
+hyperlink==19.0.0
+idna==2.8
+incremental==17.5.0
+itsdangerous==1.1.0
+jinja2==2.10.3
+kiwi-gtk==3.0.3
+markupsafe==1.1.1
+netifaces==0.10.9
+psutil==5.6.7
+pycairo==1.18.2
+pygobject==3.34.0
+pyhamcrest==1.9.0
+pytz==2019.3
+raven==6.10.0
+requests==2.22.0
+six==1.13.0
+twisted==19.10.0
+tzlocal==2.0.0
+urllib3==1.25.7
+werkzeug==0.16.0
+zope.interface==4.7.1

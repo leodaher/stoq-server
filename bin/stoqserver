@@ -2,6 +2,7 @@
 
 import sys
 if 'flask' in sys.argv:
+    print(sys.path)
     # Only patch if actually running flask (our restfull api). We should probably split this into a
     # separate project soon.
     # This needs to be done ASAP, before any other imports.

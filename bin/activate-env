@@ -1,0 +1,2 @@
+#!/bin/sh
+source /snap/stoq-server/current/env/bin/activate
